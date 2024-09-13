@@ -1,0 +1,3 @@
+D:/GitReposit/hello/build/CMakeFiles/hello.dir
+D:/GitReposit/hello/build/CMakeFiles/edit_cache.dir
+D:/GitReposit/hello/build/CMakeFiles/rebuild_cache.dir
