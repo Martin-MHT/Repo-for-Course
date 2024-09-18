@@ -1,8 +1,0 @@
-[
-{
-  "directory": "D:/GitReposit/hello/build",
-  "command": "D:\\MinGW\\bin\\g++.exe   -g -o CMakeFiles\\hello.dir\\hello.cpp.obj -c D:\\GitReposit\\hello\\hello.cpp",
-  "file": "D:/GitReposit/hello/hello.cpp",
-  "output": "CMakeFiles/hello.dir/hello.cpp.obj"
-}
-]

@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "D:/GitReposit/hello/hello.cpp" "CMakeFiles/hello.dir/hello.cpp.obj" "gcc" "CMakeFiles/hello.dir/hello.cpp.obj.d"
+  "/mnt/d/GitReposit/hello/hello.cpp" "CMakeFiles/hello.dir/hello.cpp.o" "gcc" "CMakeFiles/hello.dir/hello.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.
