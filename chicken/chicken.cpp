@@ -58,20 +58,25 @@ void Chicken::print(void) const {
     std::cout << "Hi, everyone! My name is " << getName() << ", I am " << getAge() << " years old." << std::endl;
 }
 
-int main() {
+int main(){
+    auto print = [](const Chicken &c){
+        std::cout << "Hi, everyone! My name is " << c.getName()
+                  << ", I am " << c.getAge() << " years old." << std::endl;
+    };
     Chicken c(24, "Kunkun");
-    c.print();
-    Chicken d(c);
-    d.print();
-    c.setName("Zhiyin");
-    c.print();
-    d.print();
+    print(c);
+    Chicken d;
     d = c;
-    d.print();
-    Chicken a(23);
-    a.print();
-    a.setName("Jinitaimei");
-    c = d = a;
-    c.print();
-    return 0;
+    print(d); // 测试【赋值运算符】是否正确，能正确输出给 20 分
+    Chicken a = c;
+    print(a); // 测试【赋值构造函数】是否正确，能正确输出给 20 分
+    c.setName("Xukun Cai");
+    print(c);
+    print(a);
+    print(d); // 测试是否为【深度复制】，本行与上两行能正确输出给 20 分
+    Chicken b;
+    b = d = c;
+    print(b);
+    print(d); // 测试【连续赋值】功能，本行与上一行能正确输出给 20 分
+return 0;
 }
