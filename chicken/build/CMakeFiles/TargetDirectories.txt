@@ -1,0 +1,3 @@
+/mnt/d/GitReposit/chicken/build/CMakeFiles/chicken.dir
+/mnt/d/GitReposit/chicken/build/CMakeFiles/edit_cache.dir
+/mnt/d/GitReposit/chicken/build/CMakeFiles/rebuild_cache.dir
