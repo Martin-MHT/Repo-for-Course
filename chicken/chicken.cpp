@@ -33,6 +33,8 @@ class Chicken {
             age = _age;
         }
         void setName(const char *_name) {
+            if(this -> name == _name) // To avoid self-assingment like c.setName(c.getName())
+                return ;
             if(name != nullptr)
                 delete [] name;
             if(_name != nullptr) {
@@ -78,5 +80,6 @@ int main(){
     b = d = c;
     print(b);
     print(d); // 测试【连续赋值】功能，本行与上一行能正确输出给 20 分
+    // c.setName(c.getName()); //Check self-assignment
 return 0;
 }
