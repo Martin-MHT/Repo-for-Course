@@ -1,0 +1,3 @@
+/mnt/d/Gitreposit/LinkedList/build/CMakeFiles/LinkedList.dir
+/mnt/d/Gitreposit/LinkedList/build/CMakeFiles/edit_cache.dir
+/mnt/d/Gitreposit/LinkedList/build/CMakeFiles/rebuild_cache.dir
