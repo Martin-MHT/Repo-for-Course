@@ -195,8 +195,6 @@ void SingleLinkedList<T>::remove() {
         delete currentPos;
         currentPos = head;
         prePos = nullptr;
-    } else if(currentPos->next == nullptr) {
-        
     } else {
         prePos->next = currentPos->next;
         delete currentPos;

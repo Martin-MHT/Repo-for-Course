@@ -1,52 +1,104 @@
-#include "LinkedList.h"
 #include <iostream>
-int main()
-{
-    // SingleLinkedList<int> a;
-    SingleLinkedList<int> a{1,2,3,4,5};
-    int a_get = a.getCurrentVal();
-    std::cout << a_get << std::endl;
+#include "LinkedList.h" 
 
-    SingleLinkedList<char> b;
-    // SingleLinkedList<char> b{'a', 'c', 'e'};
-    b.setCurrentVal('g');
-    b.printList();
 
-    SingleLinkedList<char> e;
-    std::cout << b.isEmpty() << " "
-              << e.isEmpty() << std::endl;
+int main() {
+    SingleLinkedList<int> list_1{1, 2, 3, 4, 5}, list_3;
+    SingleLinkedList<int> list_2(list_1);
+    list_3 = list_3 = list_2;
+
+    std::cout << "List 1 : " << std::endl;
+    list_1.printList(); // Initialization Test
+
+    std::cout << "List 3 : " << std::endl;
+    list_3.printList(); // Self-assertion Test
+
+    /*Part 1*/
+
+    if(list_1.find(3)) {
+        std::cout << "Found 3" << std::endl;
+        std::cout << list_1.getCurrentVal() << std::endl; // getCurrentVal Test
+        list_1.setCurrentVal(5);
+        std::cout << list_1.getCurrentVal() << std::endl;
+        list_1.printList(); // setCurrentVal Test
+    }
+
+    /*Part 2*/
+    std::cout << "List 2 : " << std::endl;
+    list_2.printList(); // Deep Copy Test
+
+    if(list_2.find(3)) {
+        list_2.insert(8);
+        list_2.printList(); // Insertion Test
+        list_2.insert(7);
+        list_2.insert(6); // Continuous Insertion Test
+        list_2.printList();
+        list_2.find(5);
+        list_2.insert(9); // Insertion at the tail Test
+        list_2.printList();
+    }
+
+    /*Part 3*/
+    std::cout << "List 3 : " << std::endl;
+    list_3.printList();
+    if(list_3.find(4)) {
+        list_3.remove();
+        list_3.printList();
+        std::cout << "After removing 4, the pointer is now at the position of " << list_3.getCurrentVal() << std::endl; // Removal Test
+        list_3.find(2);
+        list_3.remove();
+        list_3.remove();
+        list_3.printList();
+        std::cout << "After removing 2 and 3 continuously, the pointer is now at the position of " << list_3.getCurrentVal() << std::endl; // Continuous removal Test
+        list_3.find(1);
+        list_3.remove();
+        list_3.printList(); // Removal at the head Test
+    }
+
+    SingleLinkedList<double> dlist;
+
+    // dlist.setCurrentVal(); 
+    // dlist.getCurrentVal(); // Invalid operation test
     
-    SingleLinkedList<double> c1;
-    SingleLinkedList<double> c2{1.5, 2.0, 9.0, 4.7};
-    SingleLinkedList<double> c3;
-    c3 = c2;
-    c1.insert(3.0);
-    c2.insert(8.8);
-    bool f_c3 = c3.find(2.0);
-    c3.insert(8.8);
-    c1.printList();
-    c2.printList();
-    c3.printList();
+    dlist.insert(1.0);
+    dlist.insert(3.0);
+    dlist.insert(2.0);
+    dlist.insert(4.0);
+    dlist.find(3.0);
+    dlist.remove();
+    dlist.setCurrentVal(5.0);
+    dlist.insert(6.0);
+    dlist.remove();
+    dlist.printList();
+    dlist.find(2.0);
+    dlist.setCurrentVal(8.1);
+    dlist.printList();
 
-    e.remove();
-    c1.remove();
-    bool f = c2.find(9.0);
-    c2.remove();
-    e.printList();
-    c1.printList();
-    c2.printList();
 
     return 0;
-};
+}
 
-
-/* Expected Output :
+/*Expected Output :
+List 1 :
+1       2       3       4       5
+List 3 :
+1       2       3       4       5
+Found 3
+3
 5
-a   c   g
-0 1
-3.0
-1.5 2.0 9.0 4.7 8.8
-1.5 2.0 8.8 9.0 4.7
-
-1.5 2.0 9.0 8.8
+1       2       5       4       5
+List 2 :
+1       2       3       4       5
+1       2       3       8       4       5
+1       2       3       8       7       6       4       5
+1       2       3       8       7       6       4       5       9
+List 3 :
+1       2       3       4       5
+1       2       3       5
+After removing 4, the pointer is now at the position of 5
+1       5
+After removing 2 and 3 continuously, the pointer is now at the position of 5
+5
+1       5       4
+1       5       8.1
 */
