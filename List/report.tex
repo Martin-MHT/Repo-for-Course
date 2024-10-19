@@ -55,7 +55,7 @@
 \subsection{push\_back}
 我创建了一个空列表，随后调用 push\_back() 方法依次插入了 1, 2, 3 三个元素，最后输出了整个列表的内容。按照预期，程序应当输出 1 2 3。
 \subsection{push\_front}
-我创建了一个空列表，随后调用 push\_back() 方法依次插入了 1, 2, 3 三个元素，最后输出了整个列表的内容。按照预期，程序应当输出 3 2 1。
+我创建了一个空列表，随后调用 push\_front() 方法依次插入了 1, 2, 3 三个元素，最后输出了整个列表的内容。按照预期，程序应当输出 3 2 1。
 \subsection{pop\_back}
 我创建了一个列表并初始化为\{1, 2, 3\}，之后调用 pop\_back 方法，最后输出了整个列表的内容。按照预期，程序应当输出 1 2。
 \subsection{pop\_front}
@@ -70,7 +70,7 @@
 \subsection{erase\_range}
 我创建了一个列表并初始化为 \{1, 2, 3, 4, 5\}，之后用迭代器和自增操作将区间起点和中点分别定位在了 2，4。随后，调用了 erase 方法删除了这个区间内的元素。最后输出了整个列表的内容和返回的迭代器所指的元素。由于区间是左闭右开的，因此程序按照预期应当输出 1 4 5 \textbackslash n4。
 \subsection{size and empty}
-我创建了一个空链表并测试了 size 和 empty 方法的返回值。随后，分别调用了 push\_back、push\_front、pop\_front、pop\_back、erase(single)、erase(range) 所有可能的操作并检查每次操作后的 size 和 empty。最后，我还检查了通过 initializer\_list 方法初始化的链表的 size 和 empty。
+我创建了一个空链表并测试了 size 和 empty 方法的返回值。随后，分别调用了 push\_back、push\_front、pop\_front、pop\_back、erase(single)、erase(range) 所有可能的操作并检查每次操作后的 size 和 empty。随后，我检查了通过 initializer\_list 方法初始化的链表的 size 和 empty。最后，我检查了赋值运算是否能够保持 size 和 empty。
 
 
 \section{测试的结果}

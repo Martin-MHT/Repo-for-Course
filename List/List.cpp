@@ -202,6 +202,11 @@ void test_size_and_empty() {
     std::cout << "Initial size: " << init_lst.size() << "\nExpected: 3\n";
     std::cout << "Initial empty: " << (init_lst.empty() ? "true" : "false") << "\nExpected: false\n";
 
+    lst = init_lst;
+    std::cout << "For a list that copied from another:\n";
+    std::cout << "Size: " << lst.size() << "\nExpected: 3\n";
+    std::cout << "Empty: " << (lst.empty() ? "true" : "false") << "\nExpected: false\n";
+
 }
 
 int main() {
