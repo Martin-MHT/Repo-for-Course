@@ -43,39 +43,19 @@
 \pagestyle{fancy}
 \fancyhead{}
 \lhead{马浩天, 3240102534}
-\chead{数据结构与算法第五次作业}
+\chead{数据结构与算法第六次作业}
 \rhead{Oct.16th, 2024}
 
-\section{remove 函数的改进}
+\section{remove 函数的实现}
 原有的 remove 函数在需要删除当前节点，且左右子树都存在的情况下采取如下操作：在右子树中寻找最小的元素，赋给当前节点，然后递归地删除右子树中最小的节点。事实上，这个过程只会发生一次，因此在树高合理的情况下，仅仅考虑树的结构的话，时间复杂度可以接受。唯一的问题在于\textbf{赋值}操作时间复杂度的不可控性。
 
 为了改进这个问题，我在不改变原有删除思路的条件下，优化了赋值操作。首先，我写了 detachMin 方法，作用是：“查找子树中最小元素，删除所在节点，并返回节点的指针。”随后，在 remove 函数中我先调用 detachMin 方法寻找并删除右子树中最小节点，将返回的节点的左子树和右子树分别指向欲删除节点的左右子树，这样就可以直接将当前指针指向返回的节点。最后删除了返回的指针，这样就避免了 element 的复制，也不会产生内存泄漏。
 
-（另一个做法是采用 std::remove 来进行移动赋值。我不知道哪个更好。）
+在平衡方法上，采用 AVL 树的平衡手段，通过旋转操作使左右子树的高度差不超过1。
+只要是可能影响树的形态的操作（如 insert, remove, detachMin 等等），都要在返回之前进行平衡操作。
+我将平衡操作打包成了 balance 函数，每次旋转过后更新最新的高度。
+注意：不要忘记在 detachMin 中平衡树高。
 
-\section{测试程序}
-在原有测试程序的基础上，我修改了 printTree 的实现，使得它还将节点的深度输出，从而我们可以通过 printTree 重建整颗树出来。然后，单独对于 remove 做了一个测试，测试的树如下。
-按照预期，程序输出了应有的树结构，并且在 valgrind 的测试下，没有出现内存泄漏。
-
-\begin{figure}[htbp]
-    \centering
-    \subfigure[tree1]{
-    \includegraphics[scale=0.25]{tree1.png} \label{1}
-    }
-    \quad
-    \subfigure[tree2]{
-    \includegraphics[scale=0.25]{tree2.png} \label{2} 
-    }
-    \quad
-    \subfigure[tree3]{
-    \includegraphics[scale=0.25]{tree3.png}\label{3}
-    }
-    \quad
-    \subfigure[tree4]{
-    \includegraphics[scale=0.25]{tree4.png}\label{4}
-    }
-    \caption{删除10,6,7前后树的形态}
-\end{figure}
 
 \end{document}
 

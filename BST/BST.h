@@ -120,7 +120,7 @@ public:
         if (isEmpty()) {
             out << "Empty tree" << std::endl;
         } else {
-            printTree(root, out, 1);
+            printTree(root, out);
         }
     }
 
@@ -190,7 +190,7 @@ public:
         return *this;
     }
 
-private:
+protected:
     /**
      * @brief 二叉树节点结构体
      */
@@ -199,6 +199,8 @@ private:
         Comparable element;  ///< 节点存储的元素
         BinaryNode *left;    ///< 左子节点指针
         BinaryNode *right;   ///< 右子节点指针
+        int height; // 树高
+
 
         /**
          * @brief 构造函数，接受常量引用
@@ -207,8 +209,8 @@ private:
          * @param lt 左子节点指针
          * @param rt 右子节点指针
          */
-        BinaryNode(const Comparable &theElement, BinaryNode *lt, BinaryNode *rt)
-            : element{ theElement }, left{ lt }, right{ rt } {}
+        BinaryNode(const Comparable &theElement, BinaryNode *lt, BinaryNode *rt, int h = 1)
+            : element{ theElement }, left{ lt }, right{ rt }, height{h} {}
 
         /**
          * @brief 构造函数，接受右值引用
@@ -217,11 +219,59 @@ private:
          * @param lt 左子节点指针
          * @param rt 右子节点指针
          */
-        BinaryNode(Comparable &&theElement, BinaryNode *lt, BinaryNode *rt)
-            : element{ std::move(theElement) }, left{ lt }, right{ rt } {}
+        BinaryNode(Comparable &&theElement, BinaryNode *lt, BinaryNode *rt, int h = 1)
+            : element{ std::move(theElement) }, left{ lt }, right{ rt }, height{h} {}
     };
 
     BinaryNode *root;  ///< 树的根节点指针
+    inline int max(int a, int b) {return a > b ? a : b;}
+    inline int height(BinaryNode* t) const {
+        return t == nullptr ? 0 : t->height;
+    }
+    inline void updateHeight(BinaryNode* t) {
+        t->height = max(height(t->left), height(t->right)) + 1;
+    }
+
+    void rotateWithLeftChild(BinaryNode* &t) {
+        BinaryNode *leftChild = t->left;
+        t->left = leftChild->right;
+        leftChild->right = t;
+        updateHeight(t), updateHeight(leftChild);
+        t = leftChild;
+    }
+    void rotateWithRightChild(BinaryNode* &t) {
+        BinaryNode *rightChild = t->right;
+        t->right = rightChild->left;
+        rightChild->left = t;
+        updateHeight(t), updateHeight(rightChild);
+        t = rightChild;
+    }
+    void doubleWithLeftChild(BinaryNode* &t) {
+        rotateWithRightChild(t->left);
+        rotateWithLeftChild(t);
+    }
+    void doubleWithRightChild(BinaryNode* &t) {
+        rotateWithLeftChild(t->right);
+        rotateWithRightChild(t);
+    }
+
+
+    static const int ALLOWED_IMBALANCE = 1;
+    void balance(BinaryNode * &t) {
+        if(t == nullptr)    return;
+        if(height(t->left) - height(t->right) > ALLOWED_IMBALANCE) {
+            if(height(t->left->left) >= height(t->left->right))
+                rotateWithLeftChild(t);
+            else
+                doubleWithLeftChild(t);
+        } else if(height(t->right) - height(t->left) > ALLOWED_IMBALANCE) {
+            if(height(t->right->right) >= height(t->right->left))
+                rotateWithRightChild(t);
+            else
+                doubleWithRightChild(t);
+        } else
+            updateHeight(t);
+    }
 
     /**
      * @brief 递归查找最小元素
@@ -288,12 +338,12 @@ private:
      * @param t 当前节点指针
      * @param out 输出流
      */
-    void printTree(BinaryNode *t, std::ostream &out, int depth) const {
+    void printTree(BinaryNode *t, std::ostream &out) const {
         /// 中序遍历
         if (t != nullptr) {
-            printTree(t->left, out, depth + 1);  // 先打印左子树
-            out << t->element << " with the depth of " << depth << std::endl;  // 打印当前节点
-            printTree(t->right, out, depth + 1);  // 再打印右子树
+            printTree(t->left, out);  // 先打印左子树
+            out << t->element << " with height of " << t->height << std::endl;  // 打印当前节点
+            printTree(t->right, out);  // 再打印右子树
         }
     }
 
@@ -337,6 +387,7 @@ private:
             /// 如果元素已存在，则不进行插入
             /// 这种情况不可遗漏，严格的规则中也可以抛出异常
         }
+        balance(t);
     }
 
     /**
@@ -356,6 +407,7 @@ private:
         } else {
             // 如果元素已存在，则不进行插入
         }
+        balance(t);
     }
 
     /**
@@ -397,10 +449,15 @@ private:
      */
     BinaryNode* detachMin(BinaryNode* &t) {
         if(t == nullptr)    return t;
-        else if(t->left != nullptr) return detachMin(t->left);
+        else if(t->left != nullptr) {
+            BinaryNode *temp = detachMin(t->left);
+            balance(t);
+            return temp;
+        } 
         else {
             BinaryNode *minNode = t;
             t = t->right;
+            balance(t);
             return minNode;
         }
     }
@@ -433,6 +490,7 @@ private:
             t = (t->left != nullptr) ? t->left : t->right;
             delete oldNode;
         }
+        balance(t);
     }
 
     /**
@@ -445,7 +503,7 @@ private:
         if (t == nullptr) {
             return nullptr;
         }
-        return new BinaryNode{t->element, clone(t->left), clone(t->right)};
+        return new BinaryNode{t->element, clone(t->left), clone(t->right), t->height};
     }
 };
 

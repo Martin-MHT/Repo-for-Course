@@ -104,7 +104,7 @@ void testRemove() {
 }
 
 int main() {
-    testBinarySearchTree();
+    // testBinarySearchTree();
     testRemove();
     return 0;
 }
