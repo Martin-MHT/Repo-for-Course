@@ -1,0 +1,21 @@
+Comparison Between Custom Heapsort and std::sort_heap with Size = 5000000
+---------- Random Array ----------
+Sorting Random Array with Custom HeapSort : Correct with time cost 488ms
+Sorting Random Array with std::sort_heap : Correct with time cost 449ms
+
+---------- Ordered Array ----------
+Sorting Ordered Array with Custom HeapSort : Correct with time cost 223ms
+Sorting Ordered Array with std::sort_heap : Correct with time cost 156ms
+
+---------- Reversed Array ----------
+Sorting Reversed Array with Custom HeapSort : Correct with time cost 244ms
+Sorting Reversed Array with std::sort_heap : Correct with time cost 193ms
+
+---------- SingleDuplicatedArray ----------
+Sorting SingleDuplicatedArray with Custom HeapSort : Correct with time cost 234ms
+Sorting SingleDuplicatedArray with std::sort_heap : Correct with time cost 241ms
+
+---------- MultiDuplicatedArray ----------
+Sorting MultiDuplicatedArray with Custom HeapSort : Correct with time cost 305ms
+Sorting MultiDuplicatedArray with std::sort_heap : Correct with time cost 274ms
+

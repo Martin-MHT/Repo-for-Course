@@ -1,0 +1,15 @@
+---------- Random Array ----------
+Sorting Random Array with Custom HeapSort : Correct with time cost 468ms
+
+---------- Ordered Array ----------
+Sorting Ordered Array with Custom HeapSort : Correct with time cost 178ms
+
+---------- Reversed Array ----------
+Sorting Reversed Array with Custom HeapSort : Correct with time cost 196ms
+
+---------- SingleDuplicatedArray ----------
+Sorting SingleDuplicatedArray with Custom HeapSort : Correct with time cost 194ms
+
+---------- MultiDuplicatedArray ----------
+Sorting MultiDuplicatedArray with Custom HeapSort : Correct with time cost 236ms
+

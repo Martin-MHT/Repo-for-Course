@@ -1,0 +1,104 @@
+\documentclass[UTF8]{ctexart}
+% \documentclass{article}
+\usepackage{geometry, CJKutf8}
+\geometry{margin=1.5cm, vmargin={0pt,1cm}}
+\setlength{\topmargin}{-1cm}
+\setlength{\paperheight}{29.7cm}
+\setlength{\textheight}{25.3cm}
+
+% useful packages.
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{layout}
+\usepackage{listings}
+\usepackage{float, caption}
+\usepackage{graphicx}
+\usepackage{subfigure}
+
+
+\lstset{
+    basicstyle=\ttfamily, basewidth=0.5em
+}
+
+% some common command
+\newcommand{\dif}{\mathrm{d}}
+\newcommand{\avg}[1]{\left\langle #1 \right\rangle}
+\newcommand{\difFrac}[2]{\frac{\dif #1}{\dif #2}}
+\newcommand{\pdfFrac}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\OFL}{\mathrm{OFL}}
+\newcommand{\UFL}{\mathrm{UFL}}
+\newcommand{\fl}{\mathrm{fl}}
+\newcommand{\op}{\odot}
+\newcommand{\Eabs}{E_{\mathrm{abs}}}
+\newcommand{\Erel}{E_{\mathrm{rel}}}
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhead{}
+\lhead{马浩天, 3240102534}
+\chead{数据结构与算法第七次作业}
+\rhead{Dec 2nd, 2024}
+
+\section{HeapSort 的写法}
+采取经典的利用堆排序进行原地排序的思路：在原 vector 先建成一个大根堆，然后依次取出堆顶并维护堆的形态。
+
+具体的实现方法在 HeapSort.h 中可见，对于类 HeapSort，我写了如下成员函数：
+在 private 中： buildHeap 建堆操作， percloateDown 降堆操作；
+在 public 中：sort 表示堆排序。
+
+调用的时候只需要写 HeapSort<Comparable>::sort(array) 即可，其中 array 的类型是 vector<Comparable>。
+
+
+\section {测试流程}
+
+我的测试范围包括五种序列：
+
+1. 完全随机序列（Random Array）
+2. 有序序列（Ordered Array）
+3. 逆序序列（Reversed Array）
+4. 单一重复序列（Single-Repetitive Array，单个元素重复出现70\% 及以上的数列）
+5. 多重重复序列（Multi-Repetitive Array, 出现次数多于1的元素的总数多于70\% 的数列）
+
+造数据方面，生成随机数使用 std::mt19937，计时使用了 std::chrono ，单位为 microseconds (1 microsecond = 1e-9 second)，序列长度取了 $3 \times 10^6$。
+
+生成重复序列的方法是：shuffle 一个下标序列获得一个置换，从而能够让重复的元素均匀分配在所有的位置上。
+
+为了减少误差，对于每一种序列进行了五次重复实验。编译选项里面打开了 -O2 ，否则 std 速度会非常缓慢。
+
+同时也使用了 valgrind 进行内存泄漏测试，没有发生任何内存泄漏。
+
+\section {测试结果}
+
+
+\begin{table}[h]
+    \begin{tabular}{|l|c|c|}
+    \hline
+    Sequence Type & \multicolumn{1}{l|}{Custom Heapsort TimeCost(microseconds)} & \multicolumn{1}{l|}{std::sort\_heap TimeCost(microseconds)} \\ \hline
+    Ramdom Array            & 250873 & 246003 \\ \hline
+    Ordered Array           & 103165 & 108229 \\ \hline
+    Reversed Array          & 112118 & 118599 \\ \hline
+    Single-Repetitive Array & 106240 & 133842 \\ \hline
+    Multi-Repetitive Array  & 143304 & 155408 \\ \hline
+    \end{tabular}
+    \caption{在 5 次重复实验下的测试结果}
+    \label{tab:my-table}
+    \end{table}
+    
+    
+    
+\section {对于测试结果的分析}
+    
+    可以注意到，Custom HeapSort 实际上几乎和 std::sort\_heap 的效率相当，而且有可能更快，这可能与标准库进行了过多的封装，为了通用的设计牺牲了一些效率有关，也可能与 Cache Miss 有关。
+    
+\end{document}
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

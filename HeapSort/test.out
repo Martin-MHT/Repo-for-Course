@@ -1,0 +1,71 @@
+Comparison Between Custom Heapsort and std::sort_heap with Size = 3000000
+---------- Random Array ----------
+Sorting Random Array with Custom HeapSort : Correct with time cost 893463 microseconds
+Sorting Random Array with std::sort_heap : Correct with time cost 960186 microseconds
+Sorting Random Array with Custom HeapSort : Correct with time cost 884309 microseconds
+Sorting Random Array with std::sort_heap : Correct with time cost 960737 microseconds
+Sorting Random Array with Custom HeapSort : Correct with time cost 878088 microseconds
+Sorting Random Array with std::sort_heap : Correct with time cost 946371 microseconds
+Sorting Random Array with Custom HeapSort : Correct with time cost 878481 microseconds
+Sorting Random Array with std::sort_heap : Correct with time cost 949713 microseconds
+Sorting Random Array with Custom HeapSort : Correct with time cost 880128 microseconds
+Sorting Random Array with std::sort_heap : Correct with time cost 950362 microseconds
+For Random Array tests, the average time cost are as follows: 
+Custom heapsort : 882893 microseconds
+Std Heapsort : 953473 microseconds
+---------- Ordered Array ----------
+Sorting Ordered Array with Custom HeapSort : Correct with time cost 699545 microseconds
+Sorting Ordered Array with std::sort_heap : Correct with time cost 714837 microseconds
+Sorting Ordered Array with Custom HeapSort : Correct with time cost 703877 microseconds
+Sorting Ordered Array with std::sort_heap : Correct with time cost 736245 microseconds
+Sorting Ordered Array with Custom HeapSort : Correct with time cost 706685 microseconds
+Sorting Ordered Array with std::sort_heap : Correct with time cost 723531 microseconds
+Sorting Ordered Array with Custom HeapSort : Correct with time cost 700840 microseconds
+Sorting Ordered Array with std::sort_heap : Correct with time cost 756522 microseconds
+Sorting Ordered Array with Custom HeapSort : Correct with time cost 700086 microseconds
+Sorting Ordered Array with std::sort_heap : Correct with time cost 726590 microseconds
+For Ordered Array tests, the average time costs are as follows: 
+Custom heapsort : 702206 microseconds
+Std Heapsort : 731545 microseconds
+---------- Reversed Array ----------
+Sorting Reversed Array with Custom HeapSort : Correct with time cost 682829 microseconds
+Sorting Reversed Array with std::sort_heap : Correct with time cost 779758 microseconds
+Sorting Reversed Array with Custom HeapSort : Correct with time cost 675359 microseconds
+Sorting Reversed Array with std::sort_heap : Correct with time cost 745646 microseconds
+Sorting Reversed Array with Custom HeapSort : Correct with time cost 678773 microseconds
+Sorting Reversed Array with std::sort_heap : Correct with time cost 757288 microseconds
+Sorting Reversed Array with Custom HeapSort : Correct with time cost 682991 microseconds
+Sorting Reversed Array with std::sort_heap : Correct with time cost 749016 microseconds
+Sorting Reversed Array with Custom HeapSort : Correct with time cost 666123 microseconds
+Sorting Reversed Array with std::sort_heap : Correct with time cost 743798 microseconds
+For Reversed Array tests, the average time costs are as follows: 
+Custom heapsort : 677215 microseconds
+Std Heapsort : 755101 microseconds
+---------- SingleRepetitiveArray ----------
+Sorting SingleRepetitiveArray with Custom HeapSort : Correct with time cost 488228 microseconds
+Sorting SingleRepetitiveArray with std::sort_heap : Correct with time cost 781456 microseconds
+Sorting SingleRepetitiveArray with Custom HeapSort : Correct with time cost 482178 microseconds
+Sorting SingleRepetitiveArray with std::sort_heap : Correct with time cost 774891 microseconds
+Sorting SingleRepetitiveArray with Custom HeapSort : Correct with time cost 508308 microseconds
+Sorting SingleRepetitiveArray with std::sort_heap : Correct with time cost 811941 microseconds
+Sorting SingleRepetitiveArray with Custom HeapSort : Correct with time cost 489488 microseconds
+Sorting SingleRepetitiveArray with std::sort_heap : Correct with time cost 822517 microseconds
+Sorting SingleRepetitiveArray with Custom HeapSort : Correct with time cost 513495 microseconds
+Sorting SingleRepetitiveArray with std::sort_heap : Correct with time cost 806113 microseconds
+For SingleRepetitiveArray tests, the average time costs are as follows: 
+Custom heapsort : 496339 microseconds
+Std Heapsort : 799383 microseconds
+---------- MultiRepetitiveArray ----------
+Sorting MultiRepetitiveArray with Custom HeapSort : Correct with time cost 743506 microseconds
+Sorting MultiRepetitiveArray with std::sort_heap : Correct with time cost 838015 microseconds
+Sorting MultiRepetitiveArray with Custom HeapSort : Correct with time cost 682717 microseconds
+Sorting MultiRepetitiveArray with std::sort_heap : Correct with time cost 794073 microseconds
+Sorting MultiRepetitiveArray with Custom HeapSort : Correct with time cost 717185 microseconds
+Sorting MultiRepetitiveArray with std::sort_heap : Correct with time cost 835982 microseconds
+Sorting MultiRepetitiveArray with Custom HeapSort : Correct with time cost 738132 microseconds
+Sorting MultiRepetitiveArray with std::sort_heap : Correct with time cost 801042 microseconds
+Sorting MultiRepetitiveArray with Custom HeapSort : Correct with time cost 675333 microseconds
+Sorting MultiRepetitiveArray with std::sort_heap : Correct with time cost 794545 microseconds
+For MultiRepetitiveArray tests, the average time costs are as follows: 
+Custom heapsort : 711374 microseconds
+Std Heapsort : 812731 microseconds
