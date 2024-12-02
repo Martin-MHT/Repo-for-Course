@@ -66,7 +66,7 @@
 4. 单一重复序列（Single-Repetitive Array，单个元素重复出现70\% 及以上的数列）
 5. 多重重复序列（Multi-Repetitive Array, 出现次数多于1的元素的总数多于70\% 的数列）
 
-造数据方面，生成随机数使用 std::mt19937，计时使用了 std::chrono ，单位为 microseconds (1 microsecond = 1e-9 second)，序列长度取了 $3 \times 10^6$。
+造数据方面，生成随机数使用 std::mt19937，计时使用了 std::chrono ，单位为 microseconds (1 microsecond = $10 ^ {-6}$ second)，序列长度取了 $3 \times 10^6$。
 
 生成重复序列的方法是：shuffle 一个下标序列获得一个置换，从而能够让重复的元素均匀分配在所有的位置上。
 
