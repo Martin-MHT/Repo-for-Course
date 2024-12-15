@@ -4,7 +4,7 @@
 class dividedByZeroException {};
 class invalidCharacterException {};
 class invalidInputNumberException {};
-class arraySizeOutOfBoundsException {};
+class expressionSizeOutOfBoundsException {};
 class bracketMismatchException {};
 class operatorMismatchException {};
 

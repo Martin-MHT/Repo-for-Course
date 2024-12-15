@@ -8,6 +8,8 @@
 using namespace std;
 
 constexpr double EPS = 1e-18;
+constexpr std::size_t MAXSIZE = 10000;
+
 
 class evaluator {
     private :
@@ -41,43 +43,42 @@ class evaluator {
     }
 
     protected :
-    static double getNum(const string& expression, size_t &pos) {
-        if(expression[pos] == 'e' || expression[pos] == '.')
+    static double getNum(const string& expression, std::size_t &pos) {
+
+        //1. 整数部分
+        if(expression[pos] == 'e' || expression[pos] == '.')    //数字不能没有整数部分
             throw invalidInputNumberException {};
         double ret = expression[pos] - '0';
         while(pos + 1 < expression.size() && isdigit(expression[pos + 1]))
             ++pos, ret = ret * 10 + (expression[pos] - '0');
 
-        if(pos + 1 < expression.size() && expression[pos + 1] == '.') {
+        if(pos + 1 < expression.size() && expression[pos + 1] == '.') { // 2. 小数部分
             ++pos;
-            if(pos + 1 == expression.size() || !isdigit(expression[pos + 1]))
+            if(pos + 1 == expression.size() || !isdigit(expression[pos + 1])) //有了小数点，之后不能没有数字
                 throw invalidInputNumberException {};
             for(double eps = 1.0;
                 pos + 1 < expression.size() && isdigit(expression[pos + 1]);
                 eps *= 0.1, ret += eps * (expression[++pos] - '0'));
         }
-        if(pos + 1 < expression.size() && expression[pos + 1] == 'e') {
+        if(pos + 1 < expression.size() && expression[pos + 1] == 'e') { // 3. 指数部分
             ++pos;
-            if(pos + 1 == expression.size() || (!isdigit(expression[pos + 1]) && expression[pos + 1] != '-'))
+            if(pos + 1 == expression.size() || (!isdigit(expression[pos + 1]) && expression[pos + 1] != '-' && expression[pos + 1] != '+')) // 有了 e，之后不能没有数字
                 throw invalidInputNumberException {};
             bool negative = false;
             int exp = 0;
-            if(expression[pos + 1] == '-')
-                ++pos, negative = true;
+            while(pos + 1 < expression.size() && (expression[pos + 1] == '-' || expression[pos + 1] == '+'))
+                negative ^= (expression[++pos] == '-');  // 处理符号问题，如果是正号那么要乘以 10 的幂次，否则需要除去
             for(; pos + 1 < expression.size() && isdigit(expression[pos + 1]);
                   exp = exp * 10 + (expression[++pos] - '0'));
-            // cout << "TEST: exp = " << exp << endl;
-            if(pos + 1 < expression.size() && (expression[pos + 1] == '.' || expression[pos + 1] == 'e'))
-                throw invalidInputNumberException {};
-            for(double temp = 10.0; exp; exp >>= 1, temp = temp * temp)
-               if(exp & 1) negative ? (ret /= temp) : (ret *= temp);
+            for(double temp = negative ? 0.1 : 10.0; exp; exp >>= 1, temp = temp * temp)
+               if(exp & 1) ret *= temp;
         }
-        if(pos + 1 < expression.size() && (expression[pos + 1] == 'e' || expression[pos + 1] == '.'))
+        if(pos + 1 < expression.size() && (expression[pos + 1] == 'e' || expression[pos + 1] == '.')) //不能有多于的 '.' 和 'e'
             throw invalidInputNumberException {};
         return ret;
     }
 
-    static void calcWithOperator(stack<double>& st, char op) {
+    static void calcWithOperator(stack<double>& st, char op) { // 处理四则运算
         if(isBracket(op))
             throw bracketMismatchException {};
         if(st.empty())
@@ -110,19 +111,21 @@ class evaluator {
 
     public :
     static double evaluate (const string& expression) {
-        for(auto &ch : expression)
+        if(expression.size() > MAXSIZE) // 限制表达式长度
+            throw expressionSizeOutOfBoundsException {};
+        for(auto &ch : expression) // 判断是否有非法字符
             if(!isValid(ch))
                 throw invalidCharacterException {};
         stack<double> number;
         stack<char> op;
-        bool may_be_unary = true;
-        for(size_t i = 0; i < expression.size(); ++i) {
-            if(delim(expression[i])) continue;
+        bool may_be_unary = true; // 判断是否可能出现正负号 
+        for(std::size_t i = 0; i < expression.size(); ++i) {
+            if(delim(expression[i])) continue; // 忽略空格 
 
-            if(expression[i] == '(') {
+            if(expression[i] == '(') { // 是左括号，将其压入运算符栈
                 op.emplace('(');
                 may_be_unary = true;
-            } else if(expression[i] == ')') {
+            } else if(expression[i] == ')') { //是右括号，取出栈顶的运算符并进行运算，直至栈顶出现左括号
                 while(!op.empty() && op.top() != '(') {
                     calcWithOperator(number, op.top());
                     op.pop();
@@ -131,9 +134,9 @@ class evaluator {
                     throw bracketMismatchException {};
                 op.pop();
                 may_be_unary = false;
-            } else if(isOperator(expression[i])) {
+            } else if(isOperator(expression[i])) {  //是运算符，先把运算符栈顶处所有优先级更高的运算符取出并求值，然后再将当前运算符压入栈中
                 char cur_op = expression[i];
-                if(may_be_unary && isUnary(cur_op)) cur_op = -cur_op;
+                if(may_be_unary && isUnary(cur_op)) cur_op = -cur_op; // 处理正负号
                 while(!op.empty() &&
                       ((cur_op >= 0 && opPriority(op.top()) >= opPriority(cur_op)) ||
                       (cur_op < 0 && opPriority(op.top()) > opPriority(cur_op)))) {
@@ -142,16 +145,16 @@ class evaluator {
                 }
                 op.emplace(cur_op);
                 may_be_unary = true;
-            } else {
+            } else { // 只能是数字了，调用获取数字的模块
                 number.emplace(getNum(expression, i));
                 may_be_unary = false;
             }
         }
-        while(!op.empty()) {
+        while(!op.empty()) { // 处理剩余的四则运算符 
             calcWithOperator(number, op.top());
             op.pop();
         }
-        if(number.size() == 1)  return number.top();
+        if(number.size() == 1)  return number.top(); // 最后理应只剩下一个元素
         else throw operatorMismatchException {};
     }
 };

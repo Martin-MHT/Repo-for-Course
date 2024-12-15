@@ -3,9 +3,9 @@
 #include "expression_evaluator.h"
 using namespace std;
 string expression;
-evaluator ev;
 int main() {
-    cin >> expression;
-    cout << ev.evaluate(expression);
+    evaluator ev;
+    getline(cin, expression);
+    cout << ev.evaluate(expression) << endl;
     return 0;
 }
